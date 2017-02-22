@@ -2,9 +2,16 @@ var util = require('util');
 var winston = require('winston');
 var pg = require('pg');
 var url = require('url');
+var _ = require('lodash');
+
+_timestamp = function () {
+  return new Date().toISOString();
+};
 
 var Postgres = exports.Postgres = function (options) {
     options = options || {};
+
+    this.timestamp   = typeof options.timestamp !== 'undefined' ? options.timestamp : false;
 
     if(options.connectionString || "" != "") {
       var params = url.parse(options.connectionString);
@@ -50,6 +57,16 @@ Postgres.prototype.log = function (level, msg, meta, callback) {
     // should we skip this log message
     if (this.ignoreMessage(level, msg, meta)) {
       return callback(null, true);
+    }
+
+    var timestampFn = typeof this.timestamp === 'function'
+          ? this.timestamp
+          : _timestamp,
+        timestamp = this.timestamp ? timestampFn() : undefined;
+
+    if (meta) {
+      meta = _.cloneDeep(meta);
+      meta.timestamp = timestamp;
     }
 
     // use connection pool
