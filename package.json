@@ -1,6 +1,6 @@
 {
   "name": "winston-postgres",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A winston transport to log to a postgres db",
   "main": "index.js",
   "scripts": {
