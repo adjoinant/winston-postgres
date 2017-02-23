@@ -5,6 +5,7 @@ The winston-postgres module allows you to log your winston messages to a postgre
     var Postgres = require('winston-postgres').Postgres;
 
     winston.add(winston.transports.Postgres, {
+      ssl: false, // are you sure you want to do this?
       timestamp: true,
       connectionString: 'postgres://admin:admin@localhost:5432/api',
       tableName: 'winston-logs',
@@ -29,6 +30,7 @@ it knows where to log to postgres.
 
 The postgres transport takes the following options:
 
+    ssl: boolean to decide whether to disable ssl-secured db connection
     timestamp: boolean to decide whether to attach timestamp field to metadata (if metadata is null, no timestamp is attached)
     connectionString: the db connection uri
     databaseFunction: the name of a database function accepting 3 arguments (level, message, metadata)

@@ -23,7 +23,7 @@ var Postgres = exports.Postgres = function (options) {
         host: params.hostname,
         port: params.port,
         database: params.pathname.split('/')[1],
-        // ssl: true,
+        ssl: (options.ssl === false) ? false : true,
         max: 10, // max number of clients in pool
         idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
       };
